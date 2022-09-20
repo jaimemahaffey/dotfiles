@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+export VISUAL='emacsclient --alternate-editor='
+export EDITOR='emacsclient --alternate-editor='

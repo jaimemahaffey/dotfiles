@@ -22,7 +22,9 @@ export PATH=$PATH:/snap/bin
 # Path to your Snap installation.
 export PATH="$HOME/.emacs.d/bin:$PATH"
 
-export PATH="/bin:/usr/bin:$HOME/bin:$PATH"
+export PATH="/bin:/usr/bin:$HOME/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+
+
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -88,7 +90,15 @@ export PATH="/bin:/usr/bin:$HOME/bin:$PATH"
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
+
+{{ if eq .chezmoi.os "darwin" }}
+export PATH=$PATH:/Applications/Emacs.app/Contents/MacOS/bin
+source $(brew --prefix)/share/antigen/antigen.zsh
+{{ else if eq .chezmoi.os "linux" }}
+# linux
 source ~/antigen.zsh
+# other operating system
+{{ end }}
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh

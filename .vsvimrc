@@ -1,0 +1,148 @@
+" [ReSharper Documentation](https://www.jetbrains.com/help/resharper/)
+
+" Not support InsertLeave autocmd Automatically switch back to English input method
+"autocmd InsertLeave * !%USERPROFILE%\\.vscode\\extensions\\im-select.exe 1033
+inoremap <Esc> <Esc>:!%USERPROFILE%\\.vscode\\extensions\\im-select.exe 1033<CR>
+
+" Clear key mapping
+mapc
+nmapc
+vmapc
+set visualbell
+set number
+set relativenumber
+set clipboard=unnamed
+
+set hlsearch
+set ignorecase
+set incsearch
+
+set scrolloff=5
+
+nnoremap % :vsc Edit.GoToBrace<CR>
+
+let mapleader=","
+nnoremap <Leader>so :source ~/.vsvimrc<CR>
+
+" Get rid of this super annoying "-- VISUAL -- and External edit detected (hit <Esc> to return to previous mode, <C-c> to cancel external edit) cycle"
+" v_CTRL-C: In Visual mode: Stop Visual mode. When insert mode is pending (the mode message shows "-- (insert) VISUAL --"), it is also stopped.
+vnoremap <Esc> <C-c>
+
+" # Folding #
+" zf, zF: create
+" zd: delete
+" zo, zO: open / open recursively
+" zc, zC: close / close recursively
+" zR: open all folds
+" zM: Close all folds
+nnoremap <Leader>zd :vsc Edit.CollapsetoDefinitions<CR>
+
+" " # Search #
+" " /: Search forward for the [count]'th occurrence of {pattern}
+" " ?: Search backward for the [count]'th previous occurrence of {pattern}
+" " *: Search forward for the [count]'th occurrence of the word nearest to the cursor.
+" " #: Same as "*", but search backward.
+" " n: Repeat the latest "/" or "?" [count] times.
+" " N: Repeat the latest "/" or "?" [count] times in opposite direction.
+" nnoremap <Leader>/ :vsc Edit.Find<CR>
+"
+" nnoremap <Leader>* :vsc Edit.FindNextSelected<CR>
+" vnoremap <Leader>* :vsc Edit.FindNextSelected<CR>
+" nnoremap <Leader># :vsc Edit.FindPreviousSelected<CR>
+" vnoremap <Leader># :vsc Edit.FindPreviousSelected<CR>
+" nnoremap <Leader>n :vsc Edit.FindNextSelected<CR>
+" vnoremap <Leader>n :vsc Edit.FindNextSelected<CR>
+" nnoremap <Leader>N :vsc Edit.FindPreviousSelected<CR>
+" vnoremap <Leader>N :vsc Edit.FindPreviousSelected<CR>
+
+nnoremap <Leader>, A,<Esc>
+nnoremap <Leader>; A;<Esc>
+
+nnoremap <Leader>h ^
+vnoremap <Leader>h ^
+onoremap <Leader>h ^
+nnoremap <Leader>l $
+vnoremap <Leader>l $
+onoremap <Leader>l $
+
+" [Consider implementing tpope/vim-surround · Issue #1474 · VsVim/VsVim](https://github.com/VsVim/VsVim/issues/1474)
+" - created by jborn
+" Surround simulating bindings
+nnoremap s( ciw(<C-r>")<Esc>
+nnoremap s) ciw(<C-r>")<Esc>
+nnoremap s[ ciw[<C-r>"]<Esc>
+nnoremap s] ciw[<C-r>"]<Esc>
+nnoremap s{ ciw{<C-r>"}<Esc>
+nnoremap s} ciw{<C-r>"}<Esc>
+nnoremap s< ciw<lt><C-r>"><Esc>
+nnoremap s> ciw<lt><C-r>"><Esc>
+nnoremap s" ciw"<C-r>""<Esc>
+nnoremap s' ciw'<C-r>"'<Esc>
+nnoremap sw( ciW(<C-r>")<Esc>
+nnoremap sw) ciW(<C-r>")<Esc>
+nnoremap sw[ ciW[<C-r>"]<Esc>
+nnoremap sw] ciW[<C-r>"]<Esc>
+nnoremap sw{ ciW{<C-r>"}<Esc>
+nnoremap sw} ciW{<C-r>"}<Esc>
+nnoremap sw< ciW<lt><C-r>"><Esc>
+nnoremap sw> ciW<lt><C-r>"><Esc>
+nnoremap sw" ciW"<C-r>""<Esc>
+nnoremap sw' ciW'<C-r>"'<Esc>
+
+" Surround delete bindings
+nnoremap ds( vi(dvhp
+nnoremap ds) vi(dvhp
+nnoremap ds[ vi[dvhp
+nnoremap ds] vi[dvhp
+nnoremap ds{ vi{dvhp
+nnoremap ds} vi{dvhp
+nnoremap ds< vi<dvhp
+nnoremap ds> vi<dvhp
+nnoremap ds" vi"dvhp
+nnoremap ds' vi'dvhp
+" Surround change bindings
+nnoremap cs"' vi"oh<Esc>msvi"l<Esc>cl'<Esc>`scl'<Esc>
+nnoremap cs'" vi'oh<Esc>msvi'l<Esc>cl"<Esc>`scl"<Esc>
+
+" Surround visual selected text
+vnoremap S" c"<C-r>""<Esc>
+vnoremap S' c"<C-r>"'<Esc>
+vnoremap S( c(<C-r>")<Esc>
+vnoremap S) c(<C-r>")<Esc>
+vnoremap S[ c[<C-r>"]<Esc>
+vnoremap S] c[<C-r>"]<Esc>
+vnoremap S{ c{<C-r>"}<Esc>
+vnoremap S} c{<C-r>"}<Esc>
+vnoremap S< c<lt><C-r>"><Esc>
+vnoremap S> c<lt><C-r>"><Esc>
+vnoremap S* c/*<C-r>"*/<Esc>
+"vnoremap St c<lt>div><CR><C-r>"<Esc>
+" Surround in div tag and edit tag
+vnoremap St c<lt>div><CR><C-r>"<Esc>`<lt>lcw
+
+" # ReSharper #
+" == Code Analysis ==
+" (x) Toggle code analysis in the current file | Ctrl+Alt+Shift+8 | ReSharper_EnableDaemon
+
+nnoremap <Leader>gh :vsc ReSharper.ReSharper_GotoNextHighlight<CR>
+nnoremap <Leader>gH :vsc ReSharper.ReSharper_GotoPrevHighlight<CR>
+nnoremap <Leader>ge :vsc ReSharper.ReSharper_GotoNextErrorInSolution<CR>
+nnoremap <Leader>gE :vsc ReSharper.ReSharper_GotoPrevErrorInSolution<CR>
+
+" Inspect this: Ctrl+Shift+Alt+A
+" nnoremap <Leader>si :vsc ReSharper.ReSharper_InspectThis<CR>
+" (x) Inspection Results window | Ctrl+Alt+, | ReSharper_ShowInspectionWindow
+" View hierarchy: Ctrl+Alt+H
+" nnoremap <Leader>ih :vsc ReSharper.ReSharper_TypeHierarchyBrowse<CR>
+
+" == Coding Assistance ==
+" Show action list: Alt+Enter
+nnoremap <Leader>a :vsc ReSharper_AltEnter<CR>
+vnoremap <Leader>a :vsc ReSharper_AltEnter<CR>
+" Go to Action: Ctrl+Shift+A
+nnoremap <Leader>A :vsc ReSharper.ReSharper_GotoAction<CR>
+vnoremap <Leader>A o:vsc ReSharper.ReSharper_GotoAction<CR>
+
+" (x) Paste from clipboard history | Ctrl+Shift+V | ReSharper_PasteMultiple
+" (x) Code cleanup | Ctrl+Alt+F | ReSharper_CleanupCode
+" Silent code

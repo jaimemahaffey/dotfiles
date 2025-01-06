@@ -1,8 +1,4 @@
-" [ReSharper Documentation](https://www.jetbrains.com/help/resharper/)
-
-" Not support InsertLeave autocmd Automatically switch back to English input method
-"autocmd InsertLeave * !%USERPROFILE%\\.vscode\\extensions\\im-select.exe 1033
-inoremap <Esc> <Esc>:!%USERPROFILE%\\.vscode\\extensions\\im-select.exe 1033<CR>
+﻿" [ReSharper Documentation](https://www.jetbrains.com/help/resharper/)
 
 " Clear key mapping
 mapc
@@ -22,7 +18,7 @@ set scrolloff=5
 nnoremap % :vsc Edit.GoToBrace<CR>
 
 let mapleader=","
-nnoremap <Leader>so :source ~/.vsvimrc<CR>
+nnoremap <Leader>so :source ~/.vsvimrc<CR> | :echo "Reloading Source"<CR>
 
 " Get rid of this super annoying "-- VISUAL -- and External edit detected (hit <Esc> to return to previous mode, <C-c> to cancel external edit) cycle"
 " v_CTRL-C: In Visual mode: Stop Visual mode. When insert mode is pending (the mode message shows "-- (insert) VISUAL --"), it is also stopped.
@@ -65,7 +61,7 @@ nnoremap <Leader>l $
 vnoremap <Leader>l $
 onoremap <Leader>l $
 
-" [Consider implementing tpope/vim-surround � Issue #1474 � VsVim/VsVim](https://github.com/VsVim/VsVim/issues/1474)
+" [Consider implementing tpope/vim-surround · Issue #1474 · VsVim/VsVim](https://github.com/VsVim/VsVim/issues/1474)
 " - created by jborn
 " Surround simulating bindings
 nnoremap s( ciw(<C-r>")<Esc>
@@ -121,7 +117,7 @@ vnoremap S* c/*<C-r>"*/<Esc>
 vnoremap St c<lt>div><CR><C-r>"<Esc>`<lt>lcw
 
 " # ReSharper #
-" == Code Analysis ==
+"   == Code Analysis ==
 " (x) Toggle code analysis in the current file | Ctrl+Alt+Shift+8 | ReSharper_EnableDaemon
 
 nnoremap <Leader>gh :vsc ReSharper.ReSharper_GotoNextHighlight<CR>
@@ -130,12 +126,12 @@ nnoremap <Leader>ge :vsc ReSharper.ReSharper_GotoNextErrorInSolution<CR>
 nnoremap <Leader>gE :vsc ReSharper.ReSharper_GotoPrevErrorInSolution<CR>
 
 " Inspect this: Ctrl+Shift+Alt+A
-" nnoremap <Leader>si :vsc ReSharper.ReSharper_InspectThis<CR>
+" nnoremap <Leader>si  :vsc ReSharper.ReSharper_InspectThis<CR>
 " (x) Inspection Results window | Ctrl+Alt+, | ReSharper_ShowInspectionWindow
 " View hierarchy: Ctrl+Alt+H
-" nnoremap <Leader>ih :vsc ReSharper.ReSharper_TypeHierarchyBrowse<CR>
+" nnoremap <Leader>ih  :vsc ReSharper.ReSharper_TypeHierarchyBrowse<CR>  
 
-" == Coding Assistance ==
+"   == Coding Assistance ==
 " Show action list: Alt+Enter
 nnoremap <Leader>a :vsc ReSharper_AltEnter<CR>
 vnoremap <Leader>a :vsc ReSharper_AltEnter<CR>
@@ -143,6 +139,392 @@ vnoremap <Leader>a :vsc ReSharper_AltEnter<CR>
 nnoremap <Leader>A :vsc ReSharper.ReSharper_GotoAction<CR>
 vnoremap <Leader>A o:vsc ReSharper.ReSharper_GotoAction<CR>
 
-" (x) Paste from clipboard history | Ctrl+Shift+V | ReSharper_PasteMultiple
-" (x) Code cleanup | Ctrl+Alt+F | ReSharper_CleanupCode
-" Silent code
+
+" (x) Paste from clipboard history | Ctrl+Shift+V     | ReSharper_PasteMultiple
+" (x) Code cleanup                 | Ctrl+Alt+F       | ReSharper_CleanupCode
+" Silent code cleanup: Ctrl+Shift+Alt+F
+vnoremap <leader>f :vsc Edit.FormatSelection<CR>
+nnoremap <leader>f :vsc Edit.FormatSelection<CR>
+" Reformat code (Formatting Style): Ctrl+Alt+L
+" nnoremap <Leader>f :vsc Edit.FormatDocument<CR>
+" (x) Apply Syntax Style                        | Ctrl+Alt+S       | ReSharper_ApplyCodeStyle
+" (x) Basic code completion                     | Ctrl+Space       | ReSharper_CompleteCodeBasic
+" (x) Smart code completion                     | Ctrl+Shift+Space | ReSharper_CompleteCodeSmart
+" (x) Import symbol completion                  | Ctrl+Alt+Space   | ReSharper_CompleteCodeTypeName
+" (x) Force completion for non-preselected item | Ctrl+Enter       | ReSharper_ForceCompleteItem
+" (x) Complete statement                        | Ctrl+Shift+Enter | ReSharper_CompleteStatement 補上 () {} ; 
+
+" Parameter information: show/go to the next signature: Ctrl+P
+nnoremap <Leader>p  :vsc ReSharper.ReSharper_ParameterInfoShow<CR>
+" (x) Parameter information: go to the previous signature: | Ctrl+Alt+Shift+Space | ReSharper_ParameterInfoGoToPreviousSignature
+
+" Dispaly Quick Info: Ctrl+K, Ctrl+I (使用 code completion 也能達到同樣功能)
+nnoremap <Leader>q  :vsc Edit.QuickInfo<CR>
+" Quick documentation: Ctrl+Q, Ctrl+D
+nnoremap <Leader>Q :vsc ReSharper.ReSharper_QuickDoc<CR>
+
+" (x) Toggle Inlay Hints  | Ctrl+Alt+Shift+5 | ReSharper_ToggleInlayHints
+
+" Copy code reference: Ctrl+Alt+Shift+C
+nnoremap <Leader>c   :vsc ReSharper.ReSharper_CopyFqn<CR>
+"Copy member with [attribute] (cursor is in member, or below member)
+nnoremap <Leader>cm  :let @s=@/<CR>:vsc ReSharper.ReSharper_GotoPrevMember<CR>?[};{]\+<CR>j0<S-v>/[;{]\+<CR>%"zy"zP/\w\+\(\ *\|\_.$* *\)[({;]<CR>v$"zy/<C-r>z<CR>:let @/=@s<CR>
+" Copy statement (Select statement: <Leader>[s)
+" Adding <Esc>, <CR>, ...etc., will work, why?
+nmap <Leader>cs  <Esc><Leader>[s"zy"zPf(l
+
+" Generate code: Alt+Insert
+nnoremap <Leader>ng  :vsc ReSharper.ReSharper_Generate<CR>
+
+" Insert live template: Ctrl+J
+nnoremap <Leader>ni :vsc ReSharper.ReSharper_LiveTemplatesInsert<CR>i
+" Surround with template: Alt+Ctrl+J
+nnoremap <Leader>ns <S-v>:vsc ReSharper.ReSharper_SurroundWith<CR>
+vnoremap <Leader>ns o:vsc ReSharper.ReSharper_SurroundWith<CR>
+
+" Generate a SetUp method of NUnit
+nnoremap <Leader>nts :let @s=@/<CR>"zdd?class<CR>jo[SetUp]<CR>public<Space>void<Space>SetUp(){<CR>}<Esc>"zP:vsc ReSharper.ReSharper_SilentCleanupCode<CR>:let @/=@s<CR>
+
+" Create file from template: Alt+Ctrl+Insert
+nnoremap <Leader>nf :vsc ReSharper.ReSharper_GenerateFileBesides<CR>
+""nnoremap <Leader>nf :vsc Project.AddNewItem<CR>
+nnoremap <Leader>np :vsc File.AddNewProject<CR>
+
+nnoremap <Leader>k  :vsc Edit.MoveSelectedLinesUp<CR>
+vnoremap <Leader>k  :vsc Edit.MoveSelectedLinesUp<CR>
+nnoremap <Leader>j  :vsc Edit.MoveSelectedLinesDown<CR>
+vnoremap <Leader>j  :vsc Edit.MoveSelectedLinesDown<CR>
+nnoremap <Leader>rk :vsc ReSharper.ReSharper_MoveUp<CR>
+vnoremap <Leader>rk :vsc ReSharper.ReSharper_MoveUp<CR>
+nnoremap <Leader>rj :vsc ReSharper.ReSharper_MoveDown<CR>
+vnoremap <Leader>rj :vsc ReSharper.ReSharper_MoveDown<CR>
+nnoremap <Leader>rh :vsc ReSharper.ReSharper_MoveLeft<CR>
+vnoremap <Leader>rh :vsc ReSharper.ReSharper_MoveLeft<CR>
+nnoremap <Leader>rl :vsc ReSharper.ReSharper_MoveRight<CR>
+vnoremap <Leader>rl :vsc ReSharper.ReSharper_MoveRight<CR>
+
+" VsVim:
+" <C-A-N>                         - select word or token at caret (normal)
+" <C-A-N> (single-line selection) - add next occurrence of primary selection (visual, select)
+" <C-A-N> (multi-line selection)  - split selection into carets (visual, select)
+
+" VSCodeVim:
+"   gb - adds another cursor on the next word it finds which is the same as the word under the cursor.
+nnoremap gb :vsc Edit.InsertNextMatchingCaret<CR>
+vnoremap gb o:vsc Edit.InsertNextMatchingCaret<CR>
+"   gh - equivalent to hovering your mouse over wherever the cursor is. Handy for seeing types and error messages without reaching for the mouse!
+nnoremap gh :vsc Edit.QuickInfo<CR>
+
+nnoremap gB :vsc Edit.InsertCaretsatAllMatching<CR>
+
+
+
+" Extend selection: Ctrl+W
+nnoremap <Leader>w :vsc ReSharper.ReSharper_ExtendSelection<CR>
+vnoremap <Leader>w :vsc ReSharper.ReSharper_ExtendSelection<CR>
+" Shrink selection: Ctrl+Shift+W
+nnoremap <Leader>W :vsc ReSharper.ReSharper_ShrinkSelection<CR>
+vnoremap <Leader>W :vsc ReSharper.ReSharper_ShrinkSelection<CR>
+
+" Select containing declaration: Ctrl+Shift+[
+vnoremap <Leader>[[ :vsc ReSharper_SelectContainingDeclaration<CR>
+
+" Select statement
+nnoremap <Leader>[s :let @s=@/<CR>+?}<CR>va{<S-v>$o?\<\(if\|switch\|while\|do\|for\|foreach\|using\)<CR><Esc>:let @/=@s<CR>gv
+"                                                       <--- statements                       --->
+
+													     
+" Duplicate current line or selection: Ctrl+D
+nnoremap <Leader>d :vsc ReSharper.ReSharper_DuplicateText<CR>
+vnoremap <Leader>d :vsc ReSharper.ReSharper_DuplicateText<CR>
+vnoremap <Leader>ku :vsc Edit.UncommentSelection<CR>
+vnoremap <Leader>kc :vsc Edit.CommentSelection<CR>
+" (x) Join lines                          | Ctrl+Shift+J     | ReSharper_JoinLines
+
+" (x) Comment with line comment           | Ctrl+/           | ReSharper_LineComment
+" (x) Comment with block comment          | Ctrl+Shift+/     | ReSharper_BlockComment
+
+" (x) Run configurations popup            | Ctrl+Shift+Alt+R | ReSharper_RunConfigSettings
+" (x) Run with/without building           | Ctrl+Alt+F5      | ReSharper_CurrentConfigRunAlt
+" (x) Debug with/without building         | Alt+F5           | ReSharper_CurrentConfigDebugAlt
+
+
+
+"   == Navigation and Search ==
+" Search Everywhere/Go to Type: Ctrl+N
+nnoremap <Leader>gn :vsc ReSharper.ReSharper_GotoType<CR>
+" Go To File: Shift+Ctrl+N
+nnoremap <Leader>gf :vsc ReSharper.ReSharper_GotoFile<CR>
+" Go to file member: Ctrl+F12
+nnoremap <Leader>gm :vsc ReSharper.ReSharper_GotoFileMember<CR>
+" (x) Go to symbol | Shift+Ctrl+Alt+N | ReSharper_GotoSymbol
+" (x) Go to text   | Ctrl+N,N,N       | ReSharper_GotoText
+
+" Navigate To: Ctrl+Shift+G
+nnoremap <Leader>sg  :vsc ReSharper.ReSharper_NavigateTo<CR>
+
+" Go to type of symbol: Ctrl+Shift+T
+nnoremap <Leader>gt :vsc ReSharper.ReSharper_GotoTypeDeclaration<CR>
+" Goto local Declaration: gd
+"      Go to declaration: Ctrl+B
+nnoremap <Leader>gd :vsc ReSharper.ReSharper_GotoDeclaration<CR>
+" Go to implementation: Ctrl+Shift+Alt+B
+nnoremap <Leader>gi :vsc ReSharper.ReSharper_GotoImplementations<CR>
+" Go to parameter declaration
+nnoremap <Leader>gp :vsc EditorContextMenus.CodeWindow.Navigate.ReSharper_NavigateToParameter<CR>
+" nnoremap <Leader>gp :vsc ReSharper.ReSharper_NavigateToParameter<CR>
+" Go to base symbols: Ctrl+U
+nnoremap <Leader>gb :vsc ReSharper.ReSharper_GotoBase<CR>
+" Go to derived symbols: Alt+Ctrl+B
+nnoremap <Leader>gB :vsc ReSharper.ReSharper_GotoInheritors<CR>
+" Go to usage: Ctrl+Alt+F7
+nnoremap <Leader>gu :vsc ReSharper.ReSharper_ShowUsages<CR>
+" Find usages: Alt+F7
+nnoremap <Leader>gU :vsc ReSharper.ReSharper_FindUsages<CR>
+" (x) Find usages of related entities | Shift+Alt+F7 | ReSharper_FindUsagesAdvanced
+
+nnoremap <Leader>gx :vsc EditorContextMenus.CodeWindow.Navigate.ReSharper_NavigateToFunctionExits<CR>
+
+" # PeasyMotion #
+" Two char search mode:
+nnoremap <Leader>m :vsc Tools.InvokePeasyMotion<CR>
+
+" Whole viewport jump-to-word beginning mode:
+" nnoremap <Leader>M  :vsc Tools.InvokePeasyMotion<CR>
+
+" Jump to any open document tab
+" nnoremap <Leader>mt :vsc Tools.InvokePeasyMotionJumpToDocumentTab<CR>
+
+" Select text from current caret position to desired jump label (fwd and reverse directions supported)
+" nnoremap <Space>s :vsc Tools.InvokePeasyMotionTextSelect<CR>
+
+" Jump to word beginning in current line
+" nnoremap <Space>b :vsc Tools.InvokePeasyMotionLineJumpToWordBegining<CR>
+
+" Jump to word ending in current line
+" nnoremap <Space>e :vsc Tools.InvokePeasyMotionLineJumpToWordEnding<CR>
+
+" Jump to line beginning:
+" nnoremap <Space>l :vsc Tools.InvokePeasyMotionJumpToLineBegining<CR>
+
+" Navigate To Metadata View
+" nnoremap <Leader>gs :vsc EditorContextMenus.CodeWindow.Navigate.ReSharper_NavigateToMetadataView<CR>
+" Navigate To Sources from Symbol Files
+" nnoremap <Leader>gs :vsc EditorContextMenus.CodeWindow.Navigate.ReSharper_NavigateToPdb<CR>
+" Navigate To Decompiled Sources
+nnoremap <Leader>gs :vsc EditorContextMenus.CodeWindow.Navigate.ReSharper_NavigateToDecompiledSources<CR>
+
+" Go to containing declaration: Ctrl+[
+nnoremap <Leader>[[ :vsc ReSharper.ReSharper_GotoContainingDeclaration<CR>
+
+nnoremap [m :vsc ReSharper.ReSharper_GotoPrevMember<CR>
+nnoremap ]m :vsc ReSharper.ReSharper_GotoNextMember<CR>
+
+" nnoremap [[ 0?{<CR>:nohl<CR>
+" nnoremap ]] $/{<CR>:nohl<CR>
+" nnoremap [[ :vsc ReSharper.ReSharper_GotoPrevMember<CR>:vsc ReSharper.ReSharper_GotoPrevMember<CR>/[={;]<CR>:nohl<CR>
+" nnoremap ]] :vsc ReSharper.ReSharper_GotoNextMember<CR>/[={;]<CR>:nohl<CR>
+nnoremap [[ :let @s=@/<CR>:vsc Edit.PreviousMethod<CR>:vsc Edit.PreviousMethod<CR>/[={;]<CR>:nohl<CR>:let @/=@s<CR>+
+nnoremap ]] :let @s=@/<CR>:vsc Edit.NextMethod<CR>/[={;]<CR>:nohl<CR>:let @/=@s<CR>+
+
+
+" (x) Structural navigation: forwards  | Tab       | ReSharper_StructuralNavigationForward
+" (x) Structural navigation: backwards | Shift+Tab | ReSharper_StructuralNavigationBackward
+
+" (x) Highlight usages in file          | Ctrl+Shift+F7     | ReSharper_HighlightUsages
+" (x) Go to previous location/highlight | Ctrl+Alt+PageUp   | ReSharper_ResultListGoToPrevLocation
+" (x) Go to next location/highlight     | Ctrl+Alt+PageDown | ReSharper_ResultListGoToNextLocation
+" (x) Remove highlighting of usages     | Esc               | 
+
+" (x) View recent files   | Ctrl+E                   | ReSharper_GotoRecentFiles
+" (x) View recent edits   | Alt+Shift+Ctrl+Backspace | ReSharper_GotoRecentEdits
+" (x) Go to related files | Ctrl+Alt+Shift+G         | ReSharper_GotoRelatedFiles
+
+" Locate in Solution/Assembly Explorer: Alt+Shift+L
+nnoremap <Leader>gl :vsc ReSharper.ReSharper_LocateInSolutionOrAssemblyExplorer<CR>
+" Navigate to Windows Explorer
+nnoremap <Leader>gw :vsc EditorContextMenus.CodeWindow.Navigate.ReSharper_NavigateToWindowsExplorer<CR>
+
+
+" (x) Optimize References | Ctrl+Alt+Y | ReSharper_OptimizeReferences
+
+" Navigation history
+" Go to previous edit: Shift+Ctrl+Backspace
+nnoremap <Leader><BS> :vsc ReSharper.ReSharper_GotoLastEditLocation<CR>
+" Backward: ReSharper_NavigateBackward
+nnoremap <C-o>        :vsc View.NavigateBackward<CR>
+" Forward: ReSharper_NavigateForward
+nnoremap <C-i>        :vsc View.NavigateForward<CR>
+
+
+
+"   == Refactorings ==
+nnoremap <Leader>sr   :vsc ReSharper.ReSharper_RefactorThis<CR>
+vnoremap <Leader>sr   :vsc ReSharper.ReSharper_RefactorThis<CR>
+
+nnoremap <Leader>rR  :vsc ReSharper.ReSharper_Rename<CR>
+vnoremap <Leader>rR  :vsc ReSharper.ReSharper_Rename<CR>
+nnoremap <Leader>rr  :vsc Refactor.Rename<CR>
+vnoremap <Leader>rr  :vsc Refactor.Rename<CR>
+
+"     --- Encapsulate ---
+nnoremap <Leader>rc  :vsc ReSharper.ReSharper_ExtractClass<CR>
+vnoremap <Leader>rc  :vsc ReSharper.ReSharper_ExtractClass<CR>
+nnoremap <Leader>ri  :vsc ReSharper.ReSharper_ExtractInterface<CR>
+vnoremap <Leader>ri  :vsc ReSharper.ReSharper_ExtractInterface<CR>
+nnoremap <Leader>rm  :vsc ReSharper.ReSharper_ExtractMethod<CR>
+vnoremap <Leader>rm  :vsc ReSharper.ReSharper_ExtractMethod<CR> 
+                     
+nnoremap <Leader>re  :vsc ReSharper.ReSharper_EncapsulateField<CR>
+vnoremap <Leader>re  :vsc ReSharper.ReSharper_EncapsulateField<CR>
+
+"     --- Introduce ---
+nnoremap <Leader>rv  :vsc ReSharper.ReSharper_IntroVariable<CR>
+vnoremap <Leader>rv  :vsc ReSharper.ReSharper_IntroVariable<CR>
+
+nnoremap <Leader>rp  :vsc ReSharper.ReSharper_IntroduceParameter<CR>
+vnoremap <Leader>rp  :vsc ReSharper.ReSharper_IntroduceParameter<CR>
+" Replace a string with a parameter
+nnoremap <Leader>rsp vi":vsc ReSharper.ReSharper_IntroduceParameter<CR>
+
+nnoremap <Leader>rf  ^t=B:vsc ReSharper.ReSharper_IntroduceField<CR>
+vnoremap <Leader>rf  :vsc ReSharper.ReSharper_IntroduceField<CR>
+
+"     --- Inline ---
+nnoremap <Leader>rn  ^t=B:vsc ReSharper.ReSharper_InlineVariable<CR>
+vnoremap <Leader>rn  :vsc ReSharper.ReSharper_InlineVariable<CR>
+
+"     --- Others ---
+nnoremap <Leader>ro :vsc ReSharper.ReSharper_Move<CR>
+vnoremap <Leader>ro :vsc ReSharper.ReSharper_Move<CR>
+
+nnoremap <Leader>rcs  :vsc ReSharper.ReSharper_ChangeSignature<CR>
+vnoremap <Leader>rcs  :vsc ReSharper.ReSharper_ChangeSignature<CR>
+
+nnoremap <Leader>rd  :vsc ReSharper.ReSharper_SafeDelete<CR>
+vnoremap <Leader>rd  :vsc ReSharper.ReSharper_SafeDelete<CR>
+
+
+"   == Unit Testing ==
+nnoremap <Leader>nt :vsc EditorContextMenus.CodeWindow.CreateUnitTests<CR>
+" Unit Test Explorer: Ctrl+Alt+T
+nnoremap <Leader>vU :vsc ReSharper.ReSharper_ShowUnitTestExplorer<CR>
+
+" Repeat previous test run: Ctrl+T T
+nnoremap <leader>ut :vsc ReSharper.ReSharper_UnitTestSessionRepeatPreviousRun<CR>
+
+" Run tests under dotMemory Unit: Ctrl+T M
+" nnoremap <Leader>v  :vsc ReSharper.ReSharper_ProfileAllTestsInCurrentContextWithMemoryUnit<CR>
+
+"     --- Session ---
+" Unit Test Sessions: Ctrl+Alt+R
+nnoremap <Leader>vu :vsc ReSharper.ReSharper_ShowUnitTestSessions<CR>
+" Append to test session: Ctrl+T A
+" nnoremap <leader>u  :vsc ReSharper.ReSharper_UnitTestSessionAppendTests<CR>
+" Create new test session: Ctrl+T N
+" nnoremap <leader>u  :vsc ReSharper.ReSharper_UnitTestSessionNewSession<CR>
+
+"     --- Run ---
+" Run unit tests: Ctrl+T R
+nnoremap <leader>ur :vsc ReSharper.ReSharper_SilentCleanupCode<CR>:vsc ReSharper.ReSharper_UnitTestRunFromContext<CR>
+" Run all tests in solution: Ctrl+T L
+nnoremap <leader>ua :vsc ReSharper.ReSharper_SilentCleanupCode<CR>:vsc ReSharper.ReSharper_UnitTestRunSolution<CR>
+" Run current test session: Ctrl+T Y
+nnoremap <leader>us :vsc ReSharper.ReSharper_SilentCleanupCode<CR>:vsc ReSharper.ReSharper_UnitTestRunCurrentSession<CR>
+
+"     --- Debug ---
+" Debug unit tests: Ctrl+T D
+nnoremap <leader>ud :vsc ReSharper.ReSharper_UnitTestDebugContext<CR>
+
+
+
+"   == Tool Windows ==
+" (x) Go to breakpoints   | Ctrl+Alt+F9              | ReSharper_GotoBreakpoints
+
+" (x) View bookmarks           | Ctrl+`             | ReSharper_BookmarksBookmarksMenu
+" (x) Go to numbered bookmark  | Ctrl+[digit]       | ReSharper_BookmarksGoToBookmarkX
+" (x) Toggle numbered bookmark | Ctrl+Shift+[digit] | ReSharper_BookmarksToggleBookmarkX
+
+" (x) File structure       | Ctrl+F11     | ReSharper_ShowCodeStructure
+" (x) Find Results window  | Ctrl+Alt+U   | ReSharper_ShowFindResults
+" (x) Stack Trace Explorer | Ctrl+Shift+E | ReSharper_ExploreStackTrace
+" (x) To-do items          | Ctrl+Alt+.   | ReSharper_ShowTodoExplorer
+
+
+
+
+
+" # View #
+nnoremap <C-`>      :vsc View.Terminal<CR>
+nnoremap <Leader>vs :vsc View.SolutionExplorer<CR>
+nnoremap <Leader>vv :vsc View.GitWindow<CR>
+nnoremap <Leader>vV :vsc View.GitRepositoryWindow<CR>
+" nnoremap <Leader>v  :vsc View.TaskList<CR>
+nnoremap <Leader>ve :vsc View.ErrorList<CR>
+nnoremap <Leader>vp :vsc View.PackageManagerConsole<CR>
+
+
+
+" # Copilot #
+nnoremap <Leader>i  :vsc Ask.Copilot<CR>
+vnoremap <Leader>i  :vsc Ask.Copilot<CR>
+
+nnoremap <Leader>vi :vsc View.GitHub.Copilot.Chat<CR>
+
+
+
+" # Tab #
+nnoremap <Leader>ta :vsc Window.CloseAllDocuments<CR>
+nnoremap <Leader>to :tabo<CR>
+" switch between tabs
+nnoremap <Leader>ts :vsc Window.NextDocumentWindowNav<CR>
+
+
+
+" # Build #
+"Cancel: Ctrl+Break
+nnoremap <Leader>bb :vsc Build.Cancel<CR>
+
+"   == Solution ==
+nnoremap <Leader>bS :vsc Build.BuildSolution<CR>
+nnoremap <Leader>bC :vsc Build.CleanSolution<CR>
+nnoremap <Leader>bR :vsc Build.RebuildSolution<CR>
+
+"   == Project ==
+nnoremap <Leader>bs :vsc Build.BuildSelection<CR>
+nnoremap <Leader>bc :vsc Build.CleanSelection<CR>
+nnoremap <Leader>br :vsc Build.RebuildSelection<CR>
+
+
+
+
+" # ASP.NET MVC #
+" Go to controller: Ctrl+M, Ctrl+G
+nnoremap <Leader>gc :vsc OtherContextMenus.HTMLContext.GoToController<CR>
+" Go to view: Ctrl+M, Ctrl+G
+nnoremap <Leader>gv :vsc EditorContextMenus.CodeWindow.GoToView<CR>
+" Add view
+nnoremap <Leader>nv :vsc EditorContextMenus.CodeWindow.AddView<CR>
+
+
+
+
+" " # Debug #
+" " where
+" nnoremap ;w :vsc Debug.ShowNextStatement<CR>
+" 
+" nnoremap ;s :vsc Debug.StepInto<CR>
+" nnoremap ;S :vsc Debug.StepIntoSpecific<CR>
+" 
+" nnoremap ;n :vsc Debug.StepOver<CR>
+" nnoremap ;q :vsc Debug.StepOut<CR>
+" 
+" nnoremap ;r :vsc Debug.RunToCursor<CR>
+" nnoremap ;R :vsc Debug.SetNextStatement<CR>
+" 
+" nnoremap ;c :vsc Debug.Start<CR>
+" 
+" nnoremap ;aw :vsc Debug.AddWatch<CR>
+
+
+

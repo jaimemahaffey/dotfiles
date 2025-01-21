@@ -6,7 +6,7 @@
 edit=${EDITOR:-nano}
 tty=kitty
 
-#notify-send "Script output" "$edit"
+notify-send "Script output" "$edit"
 
 # Paths to configuration directories
 configs="$HOME/.config/hypr/configs"
@@ -46,12 +46,16 @@ main() {
         9) file="$UserConfigs/WorkspaceRules.conf" ;;
         10) file="$configs/Settings.conf" ;;
         11) file="$configs/Keybinds.conf" ;;
-        *) return ;;  # Do nothing for invalid choices
+        *) return ;;  # Do nothing for invalid choice
     esac
 
     # Open the selected file in the terminal with the text editor
-    $tty $edit "$file"
+    #$tty $edit "$file"
+    kitty --class tiny emacsclient -c -a "" "$file"
 }
+
+envalues=$(printenv EDITOR)
+notify-send "Environment Variables" $envalues
 
 # Check if rofi is already running
 if pidof rofi > /dev/null; then

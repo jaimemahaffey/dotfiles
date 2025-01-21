@@ -10,3 +10,14 @@ animation = "fromTop"
 command = "kitty --class kitty-dropterm"
 class = "kitty-dropterm"
 size = "75% 60%"
+
+[scratchpads.term-waiting]
+animation = "fromTop"
+command = "kitty --class kitty-tiny"
+class = "kitty-tiny"
+size = "50% 10%"
+
+[scratchpads.emacs]
+command = "~/bin/myemacs"
+class = "re:[eE]macs"
+match_by = "class"

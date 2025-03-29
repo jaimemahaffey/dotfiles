@@ -17,7 +17,7 @@ set scrolloff=5
 
 nnoremap % :vsc Edit.GoToBrace<CR>
 
-let mapleader=","
+let mapleader="<Space>"
 nnoremap <Leader>so :source ~/.vsvimrc<CR> | :echo "Reloading Source"<CR>
 
 " Get rid of this super annoying "-- VISUAL -- and External edit detected (hit <Esc> to return to previous mode, <C-c> to cancel external edit) cycle"
@@ -269,7 +269,7 @@ nnoremap <Leader>gt :vsc ReSharper.ReSharper_GotoTypeDeclaration<CR>
 "      Go to declaration: Ctrl+B
 nnoremap <Leader>gd :vsc ReSharper.ReSharper_GotoDeclaration<CR>
 " Go to implementation: Ctrl+Shift+Alt+B
-nnoremap <Leader>gi :vsc ReSharper.ReSharper_GotoImplementations<CR>
+nmap <Leader>gi :vsc ReSharper.ReSharper_GotoImplementations<CR>
 " Go to parameter declaration
 nnoremap <Leader>gp :vsc EditorContextMenus.CodeWindow.Navigate.ReSharper_NavigateToParameter<CR>
 " nnoremap <Leader>gp :vsc ReSharper.ReSharper_NavigateToParameter<CR>
@@ -282,7 +282,7 @@ nnoremap <Leader>gu :vsc ReSharper.ReSharper_ShowUsages<CR>
 " Find usages: Alt+F7
 nnoremap <Leader>gU :vsc ReSharper.ReSharper_FindUsages<CR>
 " (x) Find usages of related entities | Shift+Alt+F7 | ReSharper_FindUsagesAdvanced
-
+nnoremap <Leader>gn :vsc Resharper.Resharper_GotoFileNearby<CR>
 nnoremap <Leader>gx :vsc EditorContextMenus.CodeWindow.Navigate.ReSharper_NavigateToFunctionExits<CR>
 
 " # PeasyMotion #
@@ -290,22 +290,22 @@ nnoremap <Leader>gx :vsc EditorContextMenus.CodeWindow.Navigate.ReSharper_Naviga
 nnoremap <Leader>m :vsc Tools.InvokePeasyMotion<CR>
 
 " Whole viewport jump-to-word beginning mode:
-" nnoremap <Leader>M  :vsc Tools.InvokePeasyMotion<CR>
+nnoremap <Leader>M  :vsc Tools.InvokePeasyMotion<CR>
 
 " Jump to any open document tab
-" nnoremap <Leader>mt :vsc Tools.InvokePeasyMotionJumpToDocumentTab<CR>
+nnoremap <Leader>mt :vsc Tools.InvokePeasyMotionJumpToDocumentTab<CR>
 
 " Select text from current caret position to desired jump label (fwd and reverse directions supported)
-" nnoremap <Space>s :vsc Tools.InvokePeasyMotionTextSelect<CR>
+nnoremap <Space>s :vsc Tools.InvokePeasyMotionTextSelect<CR>
 
 " Jump to word beginning in current line
-" nnoremap <Space>b :vsc Tools.InvokePeasyMotionLineJumpToWordBegining<CR>
+nnoremap <Space>b :vsc Tools.InvokePeasyMotionLineJumpToWordBegining<CR>
 
 " Jump to word ending in current line
-" nnoremap <Space>e :vsc Tools.InvokePeasyMotionLineJumpToWordEnding<CR>
+nnoremap <Space>e :vsc Tools.InvokePeasyMotionLineJumpToWordEnding<CR>
 
 " Jump to line beginning:
-" nnoremap <Space>l :vsc Tools.InvokePeasyMotionJumpToLineBegining<CR>
+nnoremap <Space>l :vsc Tools.InvokePeasyMotionJumpToLineBegining<CR>
 
 " Navigate To Metadata View
 " nnoremap <Leader>gs :vsc EditorContextMenus.CodeWindow.Navigate.ReSharper_NavigateToMetadataView<CR>
@@ -404,40 +404,6 @@ vnoremap <Leader>rcs  :vsc ReSharper.ReSharper_ChangeSignature<CR>
 nnoremap <Leader>rd  :vsc ReSharper.ReSharper_SafeDelete<CR>
 vnoremap <Leader>rd  :vsc ReSharper.ReSharper_SafeDelete<CR>
 
-
-"   == Unit Testing ==
-nnoremap <Leader>nt :vsc EditorContextMenus.CodeWindow.CreateUnitTests<CR>
-" Unit Test Explorer: Ctrl+Alt+T
-nnoremap <Leader>vU :vsc ReSharper.ReSharper_ShowUnitTestExplorer<CR>
-
-" Repeat previous test run: Ctrl+T T
-nnoremap <leader>ut :vsc ReSharper.ReSharper_UnitTestSessionRepeatPreviousRun<CR>
-
-" Run tests under dotMemory Unit: Ctrl+T M
-" nnoremap <Leader>v  :vsc ReSharper.ReSharper_ProfileAllTestsInCurrentContextWithMemoryUnit<CR>
-
-"     --- Session ---
-" Unit Test Sessions: Ctrl+Alt+R
-nnoremap <Leader>vu :vsc ReSharper.ReSharper_ShowUnitTestSessions<CR>
-" Append to test session: Ctrl+T A
-" nnoremap <leader>u  :vsc ReSharper.ReSharper_UnitTestSessionAppendTests<CR>
-" Create new test session: Ctrl+T N
-" nnoremap <leader>u  :vsc ReSharper.ReSharper_UnitTestSessionNewSession<CR>
-
-"     --- Run ---
-" Run unit tests: Ctrl+T R
-nnoremap <leader>ur :vsc ReSharper.ReSharper_SilentCleanupCode<CR>:vsc ReSharper.ReSharper_UnitTestRunFromContext<CR>
-" Run all tests in solution: Ctrl+T L
-nnoremap <leader>ua :vsc ReSharper.ReSharper_SilentCleanupCode<CR>:vsc ReSharper.ReSharper_UnitTestRunSolution<CR>
-" Run current test session: Ctrl+T Y
-nnoremap <leader>us :vsc ReSharper.ReSharper_SilentCleanupCode<CR>:vsc ReSharper.ReSharper_UnitTestRunCurrentSession<CR>
-
-"     --- Debug ---
-" Debug unit tests: Ctrl+T D
-nnoremap <leader>ud :vsc ReSharper.ReSharper_UnitTestDebugContext<CR>
-
-
-
 "   == Tool Windows ==
 " (x) Go to breakpoints   | Ctrl+Alt+F9              | ReSharper_GotoBreakpoints
 
@@ -450,10 +416,6 @@ nnoremap <leader>ud :vsc ReSharper.ReSharper_UnitTestDebugContext<CR>
 " (x) Stack Trace Explorer | Ctrl+Shift+E | ReSharper_ExploreStackTrace
 " (x) To-do items          | Ctrl+Alt+.   | ReSharper_ShowTodoExplorer
 
-
-
-
-
 " # View #
 nnoremap <C-`>      :vsc View.Terminal<CR>
 nnoremap <Leader>vs :vsc View.SolutionExplorer<CR>
@@ -463,23 +425,11 @@ nnoremap <Leader>vV :vsc View.GitRepositoryWindow<CR>
 nnoremap <Leader>ve :vsc View.ErrorList<CR>
 nnoremap <Leader>vp :vsc View.PackageManagerConsole<CR>
 
-
-
-" # Copilot #
-nnoremap <Leader>i  :vsc Ask.Copilot<CR>
-vnoremap <Leader>i  :vsc Ask.Copilot<CR>
-
-nnoremap <Leader>vi :vsc View.GitHub.Copilot.Chat<CR>
-
-
-
 " # Tab #
 nnoremap <Leader>ta :vsc Window.CloseAllDocuments<CR>
 nnoremap <Leader>to :tabo<CR>
 " switch between tabs
 nnoremap <Leader>ts :vsc Window.NextDocumentWindowNav<CR>
-
-
 
 " # Build #
 "Cancel: Ctrl+Break
@@ -494,19 +444,6 @@ nnoremap <Leader>bR :vsc Build.RebuildSolution<CR>
 nnoremap <Leader>bs :vsc Build.BuildSelection<CR>
 nnoremap <Leader>bc :vsc Build.CleanSelection<CR>
 nnoremap <Leader>br :vsc Build.RebuildSelection<CR>
-
-
-
-
-" # ASP.NET MVC #
-" Go to controller: Ctrl+M, Ctrl+G
-nnoremap <Leader>gc :vsc OtherContextMenus.HTMLContext.GoToController<CR>
-" Go to view: Ctrl+M, Ctrl+G
-nnoremap <Leader>gv :vsc EditorContextMenus.CodeWindow.GoToView<CR>
-" Add view
-nnoremap <Leader>nv :vsc EditorContextMenus.CodeWindow.AddView<CR>
-
-
 
 
 " " # Debug #

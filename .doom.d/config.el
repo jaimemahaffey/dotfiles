@@ -1,9 +1,5 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
 ;; (setq user-full-name "John Doe"
@@ -22,17 +18,11 @@
 ;; accept. For example:
 ;;
 
-
-(setq doom-font (font-spec :family "Iosevka NFM" :size 18 :weight 'regular))
-
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq
+ doom-font (font-spec :family "JetBrains Mono" :size 18 :weight 'regular)
+ doom-theme 'doom-one
+ display-line-numbers-type t
+ projectile-project-search-path '("~/code/"))
 
 (define-key emacs-lisp-mode-map (kbd "C-c e") 'macrostep-expand)
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -81,14 +71,13 @@ _h_ decrease width    _l_ increase width
   ("q" nil))
 
 (map!
-    (:prefix "M-w"
-      :desc "Hydra resize" :n "SPC" #'doom-window-resize-hydra/body))
+ (:prefix "M-w"
+  :desc "Hydra resize" :n "SPC" #'doom-window-resize-hydra/body))
 
 (defun bh/display-inline-images ()
   (condition-case nil
       (org-display-inline-images)
     (error nil)))
-
 
 (defun display-kill-ring ()
   "Display the contents of the kill ring in a new buffer."
